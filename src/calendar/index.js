@@ -1,4 +1,4 @@
 import CalendarPage from './pages/CalendarPage';
+import NavBar from './components/NavBar';
 
-
-export {CalendarPage}
+export { CalendarPage, NavBar };
