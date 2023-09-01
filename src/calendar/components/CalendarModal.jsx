@@ -1,26 +1,24 @@
-import { addHours } from 'date-fns';
-import { useState } from 'react';
+import {useState } from 'react';
+import { addHours, differenceInSeconds } from 'date-fns';
 import Modal from 'react-modal';
 
-import DatePicker, {
-    registerLocale,
-    setDefaultLocale,
-} from "react-datepicker"
+import DatePicker, {registerLocale,setDefaultLocale,} from "react-datepicker"
 import es from 'date-fns/locale/es';
 
 import "react-datepicker/dist/react-datepicker.css";
+import { is } from 'date-fns/locale';
 
 registerLocale('es', es)
 
 const customStyles = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-    },
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+      },
 };
 
 Modal.setAppElement('#root');
@@ -55,6 +53,17 @@ export default function CalendarModal() {
         })
     }
 
+
+    const onSubmit = (event)=>{
+        event.preventDefault()
+        
+        const difference = differenceInSeconds(formValues.end, formValues.start)
+        if(difference <= 0 || isNaN(difference) ){
+            return
+        }
+
+    }
+
   return (
     <Modal
         isOpen={isOpen}
@@ -62,11 +71,12 @@ export default function CalendarModal() {
         style={customStyles}
         className="modal"
         overlayClassName="modal-fondo"
+
         closeTimeoutMS={200}
     >
         <h1> Nuevo evento </h1>
     <hr />
-    <form className="container">
+    <form className="container" onSubmit={onSubmit}>
 
         <div className="form-group mb-2">
             <label>Fecha y hora inicio</label>
