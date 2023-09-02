@@ -1,4 +1,4 @@
-import {useMemo, useState } from 'react';
+import {useEffect, useMemo, useState } from 'react';
 import { addHours, differenceInSeconds } from 'date-fns';
 import Modal from 'react-modal';
 
@@ -9,7 +9,7 @@ import DatePicker, {registerLocale, setDefaultLocale,} from "react-datepicker"
 import es from 'date-fns/locale/es';
 
 import "react-datepicker/dist/react-datepicker.css";
-import { useUiStore } from '../../hooks';
+import { useCalendarStore, useUiStore } from '../../hooks';
 
 registerLocale('es', es)
 
@@ -29,21 +29,28 @@ Modal.setAppElement('#root');
 
 export default function CalendarModal() {
     const { isDateModalOpen, closeDateModal } = useUiStore()
+    const {activeEvent} = useCalendarStore()
     const [formSubmitted, setFormSubmitted] = useState(false)
 
 
     const [formValues, setFormValues] = useState({
-        title: 'Evento',
-        notes: 'Notas del evento',
+        title: '',
+        notes: '',
         start : new Date(),
         end: addHours(new Date(), 2),
-
     })
 
     const tittleClass = useMemo(()=>{
         if(!formSubmitted)return ''
         return formValues.title.trim().length < 2 ? '' : 'is-valid'
     },[formSubmitted, formValues.title])
+
+    useEffect(() => {
+        if(activeEvent !== null){
+            setFormValues({...activeEvent})
+        }
+
+    }, [activeEvent]);
 
     const onCloseModal = ()=>{
         closeDateModal()
