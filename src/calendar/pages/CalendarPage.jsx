@@ -1,5 +1,5 @@
 import { Calendar } from 'react-big-calendar'
-import {NavBar, CalendarEvent, CalendarModal}  from "../";
+import {NavBar, CalendarEvent, CalendarModal, FabAddNew}  from "../";
 
 import "react-big-calendar/lib/css/react-big-calendar.css"
 
@@ -64,6 +64,7 @@ export default function CalendarPage() {
       />
 
       <CalendarModal/>
+      <FabAddNew/>
     </>
   )
 }
