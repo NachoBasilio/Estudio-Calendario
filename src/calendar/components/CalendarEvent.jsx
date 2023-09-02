@@ -13,7 +13,7 @@ export default function CalendarEvent({event}) {
                 title
             }
         </strong>
-        <span> - {user.name}</span>
+        <span> - {user?.name}</span>
     </>
   )
 }
