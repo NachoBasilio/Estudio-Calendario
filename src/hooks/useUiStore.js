@@ -27,6 +27,8 @@ export const useUiStore = () => {
 
         //Metodos
         openDateModal,
-        closeDateModal
+        closeDateModal,
+        toggleDateModal
+
     }
 }
