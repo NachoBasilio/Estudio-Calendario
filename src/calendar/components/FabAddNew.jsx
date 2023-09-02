@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux"
 import { useCalendarStore, useUiStore } from "../../hooks"
 
 export default function FabAddNew() {
