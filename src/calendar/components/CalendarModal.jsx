@@ -1,12 +1,14 @@
-import {useState } from 'react';
+import {useMemo, useState } from 'react';
 import { addHours, differenceInSeconds } from 'date-fns';
 import Modal from 'react-modal';
 
-import DatePicker, {registerLocale,setDefaultLocale,} from "react-datepicker"
+import Swal from 'sweetalert2';
+import "sweetalert2/dist/sweetalert2.css"
+
+import DatePicker, {registerLocale, setDefaultLocale,} from "react-datepicker"
 import es from 'date-fns/locale/es';
 
 import "react-datepicker/dist/react-datepicker.css";
-import { is } from 'date-fns/locale';
 
 registerLocale('es', es)
 
@@ -27,6 +29,9 @@ Modal.setAppElement('#root');
 export default function CalendarModal() {
 
     const [isOpen, setIsOpen] = useState(true)
+    const [formSubmitted, setFormSubmitted] = useState(false)
+
+
     const [formValues, setFormValues] = useState({
         title: 'Evento',
         notes: 'Notas del evento',
@@ -34,6 +39,11 @@ export default function CalendarModal() {
         end: addHours(new Date(), 2),
 
     })
+
+    const tittleClass = useMemo(()=>{
+        if(!formSubmitted)return ''
+        return formValues.title.trim().length < 2 ? '' : 'is-valid'
+    },[formSubmitted, formValues.title])
 
     const onCloseModal = ()=>{
         setIsOpen(false)
@@ -56,9 +66,17 @@ export default function CalendarModal() {
 
     const onSubmit = (event)=>{
         event.preventDefault()
+        setFormSubmitted(true)
         
         const difference = differenceInSeconds(formValues.end, formValues.start)
         if(difference <= 0 || isNaN(difference) ){
+            Swal.fire('Error', 'La fecha de fin debe ser mayor a la de inicio', 'error')
+
+            return
+        }
+
+        if(formValues.title.trim().length < 2){
+            setFormSubmitted(false)
             return
         }
 
@@ -114,7 +132,7 @@ export default function CalendarModal() {
             <label>Titulo y notas</label>
             <input 
                 type="text" 
-                className="form-control"
+                className={`form-control ${tittleClass}`}
                 placeholder="Título del evento"
                 name="title"
                 autoComplete="off"
