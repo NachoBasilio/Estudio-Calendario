@@ -14,18 +14,18 @@ export default function CalendarPage() {
 
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month')
 
-  const eventStyleGetter = (event, start, end, isSelected) => {
+  const eventStyleGetter = ( event, start, end, isSelected ) => {
+
     const style = {
-      backgroundColor: "#347CF7",
+      backgroundColor: '#347CF7',
       borderRadius: '0px',
       opacity: 0.8,
-      color: 'white',
-      border: '0px',
-      display: 'block'
+      color: 'white'
     }
+
     return {
       style
-    }  
+    }
   }
   
   const onDobleClick = (e)=>{
