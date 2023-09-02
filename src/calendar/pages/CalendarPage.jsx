@@ -6,6 +6,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css"
 
 import { getMessagesES, localizer } from '../../helpers';
 import { useState } from 'react';
+import { useUiStore } from '../../hooks';
 
 const events = [
   {
@@ -21,39 +22,41 @@ const events = [
   }
 ]
 
-const eventStyleGetter = (event, start, end, isSelected) => {
-  const style = {
-    backgroundColor: "#347CF7",
-    borderRadius: '0px',
-    opacity: 0.8,
-    color: 'white',
-    border: '0px',
-    display: 'block'
-  }
-  return {
-    style
-  }  
-}
 
-const onDobleClick = (e)=>{
-  console.log(e)
-}
-
-const onSelect = (e)=>{
-  console.log({
-    onClick: e
-  })
-}
-
-const onViewChanged = (e)=>{
-  localStorage.setItem('lastView', e)
-}
 
 
 export default function CalendarPage() {
+  const { openDateModal} = useUiStore()
 
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month')
 
+  const eventStyleGetter = (event, start, end, isSelected) => {
+    const style = {
+      backgroundColor: "#347CF7",
+      borderRadius: '0px',
+      opacity: 0.8,
+      color: 'white',
+      border: '0px',
+      display: 'block'
+    }
+    return {
+      style
+    }  
+  }
+  
+  const onDobleClick = (e)=>{
+    openDateModal()
+  }
+  
+  const onSelect = (e)=>{
+    console.log({
+      onClick: e
+    })
+  }
+  
+  const onViewChanged = (e)=>{
+    localStorage.setItem('lastView', e)
+  }
 
 
   return (
