@@ -29,12 +29,27 @@ export const useAuthStore = ()=>{
         }
     }
 
+    const startRegister = async({email, name, password})=>{
+        dispatch(onChecking())
+        try {
+            const {data} = await calendarApi.post("/auth/new", {
+                email,
+                name,
+                password
+            })
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return {
         status,
         user, 
         errorMessage,
 
-        startLogin
+        startLogin,
+        startRegister
     }
 }

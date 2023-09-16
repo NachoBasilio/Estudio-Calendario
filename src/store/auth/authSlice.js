@@ -21,9 +21,9 @@ const authSlice = createSlice({
         state.errorMessage = undefined
     },
     onLogout:(state, {payload})=>{
-      state.status = payload
+      state.status = "no-authenticated"
       state.user = {}
-      state.errorMessage = undefined
+      state.errorMessage = payload
     },
     clearErrorMessage:(state)=>{
       state.errorMessage = undefined
@@ -31,6 +31,6 @@ const authSlice = createSlice({
   }
 });
 
-export const {onChecking, onLogin, onLogout, clearErrorMesage} = authSlice.actions
+export const {onChecking, onLogin, onLogout, clearErrorMessage} = authSlice.actions
 
 export default authSlice.reducer
