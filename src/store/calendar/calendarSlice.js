@@ -34,11 +34,11 @@ const calendarSlice = createSlice({
         state.activeEvent = null
     },
     updateEvent:(state, action) => {
-        state.events = state.events.map(e => (e._id === action.payload._id) ? action.payload : e)
+        state.events = state.events.map(e => (e.id === action.payload.id) ? action.payload : e)
     },
     onDelete: (state) => {
         if(state.activeEvent) {
-        state.events = state.events.filter(e => e._id !== state.activeEvent._id)
+        state.events = state.events.filter(e => e.id !== state.activeEvent.id)
         state.activeEvent = null
         }
     },
