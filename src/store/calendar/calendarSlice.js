@@ -50,10 +50,24 @@ const calendarSlice = createSlice({
                 state.events.push(element)
             }
         });
+    },
+    onLogoutCalendar: (state)=>{
+        state.isLoadingEvents = true
+        state.events = [
+            //tempEvent
+        ]
+        state.activeEvent = null
     }
   }
 });
 
-export const {onSetActiveEvent, onAddNewEvent, updateEvent, onDelete, onLoadEvents} = calendarSlice.actions
+export const {
+    onSetActiveEvent, 
+    onAddNewEvent, 
+    updateEvent, 
+    onDelete, 
+    onLoadEvents,
+    onLogoutCalendar
+} = calendarSlice.actions
 
 export default calendarSlice.reducer
