@@ -39,8 +39,14 @@ export const useCalendarStore = () => {
 
     }
 
-    const StartDeleteEvent = () => {
-        dispatch(onDelete())
+    const StartDeleteEvent = async () => {
+        try {
+            await calendarApi.delete("/events/"+activeEvent.id)
+            dispatch(onDelete())
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     
@@ -51,6 +57,7 @@ export const useCalendarStore = () => {
             const events = convertEventsToDateEvents(data.event)
             dispatch(onLoadEvents(events))
         } catch (error) {
+            Swal.fire("Error al eliminar","No eres el usuario", "error")
             console.log(error)
         }
     }
